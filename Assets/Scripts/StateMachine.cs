@@ -57,7 +57,6 @@ public class StateMachine : MonoBehaviour
         //yield return pauses running of our coroutine
         while (currentState == State.Attack)
         {
-            Debug.Log("Attacking");
             aiMovement.AIMoveTowards(aiMovement.player);
 
             if (Vector2.Distance(transform.position, aiMovement.player.position) > aiMovement.chaseDistance)
@@ -67,7 +66,6 @@ public class StateMachine : MonoBehaviour
 
             yield return null; //return to method on the very next frame
         }
-        Debug.Log("Exit Attack Mode");
         NextState();
     }
 
@@ -76,10 +74,8 @@ public class StateMachine : MonoBehaviour
         Debug.Log("Enter Defence Mode");
         while (currentState == State.Defence)
         {
-            Debug.Log("Defending");
             yield return null; 
         }
-        Debug.Log("Exit Defence Mode");
         NextState();
     }
 
@@ -88,16 +84,13 @@ public class StateMachine : MonoBehaviour
         Debug.Log("Strategic Withdraw");
         while (currentState == State.RunAway)
         {
-            Debug.Log("Running Away");
             yield return null; 
         }
-        Debug.Log("Making a Stance");
         NextState();
     }
 
     private IEnumerator BerryPickingState()
     {
-        Debug.Log("Enter Regeneration Mode");
 
         aiMovement.LowestDistance();
 
@@ -105,7 +98,7 @@ public class StateMachine : MonoBehaviour
         //sounds like our update
         while (currentState == State.BerryPicking)
         {
-            Debug.Log("Healing");
+            //Debug.Log("Healing");
             aiMovement.WaypointUpdate();
             aiMovement.AIMoveTowards(aiMovement.waypoints[aiMovement.waypointIndex]);
 
@@ -119,7 +112,6 @@ public class StateMachine : MonoBehaviour
 
             yield return null; 
         }
-        Debug.Log("Exit Regeneration Mode");
         NextState();
     }
 }

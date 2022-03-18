@@ -24,13 +24,15 @@ public class PlayerManager : BaseManager
 
     public void EndTurn()
     {
-       
+        _buttonGroup.interactable = false;
+        _aiManager.TakeTurn();
     }
 
     public void EnergonCubes()
     {
         //Heal(20f);
         StartCoroutine(HealOverTime(3, 1f));
+        EndTurn();
     }
 
     private bool _isHealOverTimeRunning = false;
@@ -42,7 +44,7 @@ public class PlayerManager : BaseManager
             for (int i = 0; i < 3; i++)
             {
                 Heal(10f);
-                yield return new WaitForSeconds(waitTime);
+                yield return new WaitForSecondsRealtime(waitTime);
             }
 
             _isHealOverTimeRunning = false;
@@ -53,15 +55,17 @@ public class PlayerManager : BaseManager
     public void Retreat()
     {
         DealDamage(25f);
+        EndTurn();
     }
 
     public void EnergonShield()
     {
-
+        EndTurn();
     }
 
     public void PlasmaCannon()
     {
         _aiManager.DealDamage(15f);
+        EndTurn();
     }
 }
